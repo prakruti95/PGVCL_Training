@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage>
                       sharedPreferences.setString("MYEMAIL",email1);
 
                       login(email1,pass1);
-                      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => DashboardScreen()));
+                      //Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => DashboardScreen()));
 
                   }, child: Text("Login")),
                   TextButton(onPressed: ()
@@ -128,6 +128,7 @@ class _LoginPageState extends State<LoginPage>
       else
       {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login Success")));
+        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => DashboardScreen()));
       }
 
   }
