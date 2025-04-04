@@ -74,6 +74,7 @@ class BillPaymentScreen extends StatefulWidget
 class _BillPaymentScreenState extends State<BillPaymentScreen>
 {
   TextEditingController bill = TextEditingController();
+  final mykey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context)
@@ -81,8 +82,9 @@ class _BillPaymentScreenState extends State<BillPaymentScreen>
     return Scaffold
       (
         appBar: AppBar(title: Text("Bill Payment"),),
-        body: Center
+        body: Form
           (
+          key: mykey,
             child: Column
               (
                 children:
@@ -96,55 +98,73 @@ class _BillPaymentScreenState extends State<BillPaymentScreen>
                           labelText: 'Enter Bill Amount',
                           border: OutlineInputBorder(),
                           ),
+                          validator: (value)
+                          {
+                              if(value!.isEmpty)
+                              {
+                                  return "Enter Your Amount";
+                              }
+                              return null;
+                          },
                       ),
                       SizedBox(height: 10,),
                       ElevatedButton(onPressed: ()
                       {
+
+                        if(mykey.currentState!.validate())
+                        {
+
                           String billAmount = bill.text.toString();
-                           //int a = int.parse(billAmount);
-
-
                           if (billAmount.isNotEmpty ) {
-                          // Simulating a payment process
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text('Payment Successful'),
-                                content: Text('You have paid ₹$billAmount.'),
-                                actions: [
+                            // Simulating a payment process
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Payment Successful'),
+                                  content: Text('You have paid ₹$billAmount.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        Navigator.pop(context); // Navigate back to Home
+                                      },
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                          else
+                          {
+                            showDialog(context: context, builder: (context)
+                            {
+                              return AlertDialog
+                                (
+                                title: Text('Error'),
+                                content: Text('Please enter a valid bill amount.'),
+                                actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
-                                      Navigator.pop(context);
-                                      Navigator.pop(context); // Navigate back to Home
+                                      Navigator.pop(context); // Close the dialog
                                     },
                                     child: Text('OK'),
                                   ),
                                 ],
-                              );
-                            },
-                          );
-                        }
-                        else
-                        {
-                                showDialog(context: context, builder: (context)
-                                {
-                                  return AlertDialog
-                                    (
-                                    title: Text('Error'),
-                                    content: Text('Please enter a valid bill amount.'),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context); // Close the dialog
-                                        },
-                                        child: Text('OK'),
-                                      ),
-                                    ],
 
-                                    );
-                                });
+                              );
+                            });
+                          }
                         }
+
+
+
+
+                           //int a = int.parse(billAmount);
+
+
+
 
 
                       },child: Text("Pay Bill"),)
