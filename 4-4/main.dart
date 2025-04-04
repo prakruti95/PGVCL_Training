@@ -1,13 +1,32 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:trainingday3/screen1.dart';
+import 'package:trainingday3/screen2.dart';
+import 'package:trainingday3/screen3.dart';
+import 'package:trainingday3/screen4platformcode.dart';
 
 import 'alertdialog.dart';
 
-void main()
-{
-  runApp(BackButton1());
+// void main()
+// {
+//   runApp(MyApp12());
+// }
+
+void main() {
+  // Run the appropriate app based on the platform
+  if (Platform.isIOS)
+  {
+    runApp(PGVCLAppCupertino());
+  }
+  else
+  {
+    runApp(PGVCLAppMaterial());
+  }
 }
+
 class MyApp extends StatelessWidget 
 {
   const MyApp({super.key});
