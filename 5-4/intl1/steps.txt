@@ -1,0 +1,19 @@
+step 1: Create l10n folder inside lib folder
+
+step 2: add dependencies 
+intl: ^0.18.1
+  flutter_localizations:
+      sdk: flutter
+
+step 3:add under flutter
+  generate: true
+  assets:
+    - lib/l10n/
+
+step 4:
+create arb files inside l10n folder
+
+step 5:add intl_utils in dev_dependencies
+
+Step 6:
+
