@@ -1,0 +1,141 @@
+async-await:
+
+import 'dart:async';
+
+void main() {
+  print("Start");
+
+ 
+  fetchData();
+
+  print("End");
+}
+
+
+Future<void> fetchData() async {
+  print("Fetching data...");
+
+
+  await Future.delayed(Duration(seconds: 3));
+
+
+  print("Data fetched successfully!");
+}
+
+
+
+Stream:
+
+Stream<int> numberStream() async* {
+  for (int i = 1; i <= 5; i++) {
+    await Future.delayed(Duration(seconds: 1)); // 1 second wait
+    yield i; // emit number
+  }
+}
+
+void main() {
+ //listen stream
+  numberStream().listen((value) {
+    print("Received: $value");
+  });
+}
+
+
+async -await:
+import 'dart:async';
+
+// Simulating an asynchronous function that fetches user data
+Future<String> fetchUserData() async {
+  print('Fetching user data...');
+  await Future.delayed(Duration(seconds: 3)); // Simulate a network delay
+  return 'User: John Doe, Age: 30';
+}
+
+// Simulating another asynchronous task (like processing data)
+Future<String> processData(String data) async {
+  print('Processing data...');
+  await Future.delayed(Duration(seconds: 2)); // Simulate processing time
+  return 'Processed Data: $data (Uppercase)';
+}
+
+Future<void> main() async {
+  // Using async/await to fetch and process data sequentially
+  String userData = await fetchUserData();
+  print('Fetched Data: $userData');
+
+  String processedData = await processData(userData);
+  print(processedData);
+}
+
+
+Stream1:
+import 'dart:async';
+
+// Simulating a Future that fetches weather data
+Future<String> fetchWeatherData() async {
+  print('Fetching weather data...');
+  await Future.delayed(Duration(seconds: 2)); // Simulate network delay
+  return 'Sunny, 25°C';
+}
+
+// Simulating a Stream that provides weather updates every 3 seconds
+Stream<String> weatherUpdates() async* {
+  List<String> weatherConditions = ['Sunny, 25°C', 'Cloudy, 22°C', 'Rainy, 18°C'];
+  int index = 0;
+
+  while (true) {
+    await Future.delayed(Duration(seconds: 3));
+    yield weatherConditions[index % weatherConditions.length];
+    index++;
+  }
+}
+
+Future<void> main() async {
+  // Using Future with async and await
+  String weather = await fetchWeatherData();
+  print('Initial Weather: $weather');
+
+  // Using Stream to listen to weather updates
+  Stream<String> weatherStream = weatherUpdates();
+  await for (var update in weatherStream.take(5)) {
+    print('Weather Update: $update');
+  }
+}
+
+stream2:
+import 'dart:async';
+
+// Simulating a Future that fetches weather data
+Future<String> fetchWeatherData() async 
+{
+  print('Fetching weather data...');
+  await Future.delayed(Duration(seconds: 2)); // Simulate network delay
+  return 'Sunny, 25°C';
+}
+
+// Simulating a Stream that provides weather updates every 3 seconds
+Stream<String> weatherUpdates() async* 
+{
+  List<String> weatherConditions =
+    ['Sunny, 25°C', 'Cloudy, 22°C', 'Rainy, 18°C'];
+  int index = 0;
+
+  while (true) {
+    await Future.delayed(Duration(seconds: 3));
+    yield weatherConditions[index % weatherConditions.length];
+    index++;
+  }
+}
+
+Future<void> main() async 
+{
+  // Using Future with async and await
+  String weather = await fetchWeatherData();
+  print('Initial Weather: $weather');
+
+  // Using Stream to listen to weather updates
+  Stream<String> weatherStream = weatherUpdates();
+  await for (var update in weatherStream.take(5)) {
+    print('Weather Update: $update');
+  }
+}
