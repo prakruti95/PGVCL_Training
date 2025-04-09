@@ -1,11 +1,11 @@
-import 'package:bloc11/todo.dart';
 import 'package:equatable/equatable.dart';
+import 'todo.dart';
 
-abstract class TodoEvent extends Equatable
-{
+abstract class TodoEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
+
 class AddTodoEvent extends TodoEvent {
   final Todo todo;
 
@@ -14,6 +14,7 @@ class AddTodoEvent extends TodoEvent {
   @override
   List<Object?> get props => [todo];
 }
+
 class ToggleTodoEvent extends TodoEvent {
   final int index;
 
@@ -24,10 +25,10 @@ class ToggleTodoEvent extends TodoEvent {
 }
 
 class RemoveTodoEvent extends TodoEvent {
-  final int index;
+  final int id; // Change index to id
 
-  RemoveTodoEvent(this.index);
+  RemoveTodoEvent(this.id);
 
   @override
-  List<Object?> get props => [index];
+  List<Object?> get props => [id];
 }

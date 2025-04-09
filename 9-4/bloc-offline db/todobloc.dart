@@ -1,24 +1,22 @@
-import 'package:bloc11/TodoEvent.dart';
-import 'package:bloc11/TodoState.dart';
-import 'package:bloc11/tododatabase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'TodoEvent.dart';
+import 'TodoState.dart';
+import 'todo.dart';
+import 'TodoDatabase.dart';  // Import the database helper class
 
-class TodoBloc extends Bloc<TodoEvent,TodoState>
-{
+class TodoBloc extends Bloc<TodoEvent, TodoState> {
   final TodoDatabase _todoDatabase = TodoDatabase.instance;
 
-  TodoBloc() : super(TodoInitialState())
-  {
+  TodoBloc() : super(TodoInitialState()) {
     on<AddTodoEvent>(_onAddTodo);
     on<ToggleTodoEvent>(_onToggleTodo);
     on<RemoveTodoEvent>(_onRemoveTodo);
     _loadTodos();
   }
 
-  Future<void> _loadTodos() async
-  {
+  Future<void> _loadTodos() async {
     final todos = await _todoDatabase.getTodos();
-    emit(TodoLoadedState(todos: todos));
+    emit(TodoLoadedState(todos));
   }
 
   Future<void> _onAddTodo(AddTodoEvent event, Emitter<TodoState> emit) async {
@@ -35,9 +33,8 @@ class TodoBloc extends Bloc<TodoEvent,TodoState>
   }
 
   Future<void> _onRemoveTodo(RemoveTodoEvent event, Emitter<TodoState> emit) async {
-    await _todoDatabase.delete(event.index);
-    _loadTodos();
+    // Use the `id` from the event, not the `index`
+    await _todoDatabase.delete(event.id); // Pass the `id` directly
+    _loadTodos(); // Reload the updated list
   }
-
-
 }

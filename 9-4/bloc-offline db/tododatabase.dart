@@ -1,23 +1,21 @@
-import 'package:bloc11/todo.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-class TodoDatabase
-{
+import 'todo.dart';
+
+class TodoDatabase {
   static final TodoDatabase instance = TodoDatabase._init();
 
-  Database? _database;
+  static Database? _database;
 
   TodoDatabase._init();
 
-  Future<Database> get database async
-  {
+  Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDB('todos.db');
     return _database!;
   }
 
-  Future<Database> _initDB(String filePath) async
-  {
+  Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
     return await openDatabase(path, version: 1, onCreate: _onCreate);

@@ -1,21 +1,17 @@
-class Todo
-{
-  final int? id;
+class Todo {
+  final int? id; // Ensure this is not nullable if you're relying on it
   final String task;
   final bool isCompleted;
 
-  Todo
-      ({
+  Todo({
     this.id,
     required this.task,
-    this.isCompleted = false
-    });
+    this.isCompleted = false,
+  });
 
   // Convert a Todo into a Map (SQLite expects a Map)
-  Map<String, dynamic> toJson()
-  {
-    return
-      {
+  Map<String, dynamic> toJson() {
+    return {
       'task': task,
       'isCompleted': isCompleted ? 1 : 0,  // SQLite stores booleans as integers
     };
@@ -29,12 +25,11 @@ class Todo
       isCompleted: json['isCompleted'] == 1,  // Convert integer back to boolean
     );
   }
-  Todo copyWith
-      ({
-      String? task,
-      bool? isCompleted,
-    })
-  {
+
+  Todo copyWith({
+    String? task,
+    bool? isCompleted,
+  }) {
     return Todo(
       id: id,
       task: task ?? this.task,
