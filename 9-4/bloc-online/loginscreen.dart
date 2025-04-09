@@ -1,4 +1,6 @@
 import 'package:bloc22/loginevent.dart';
+import 'package:bloc22/product_screen.dart';
+import 'package:bloc22/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen>
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message)),
                   );
+                  Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => ProductScreen()));
                 }
                 else if (state is LoginFailure)
                 {
@@ -74,6 +77,10 @@ class _LoginScreenState extends State<LoginScreen>
                       },
                       child: const Text("Login"),
                     ),
+                    TextButton(onPressed: ()
+                    {
+                      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => SignupScreen()));
+                    }, child: Text("Do you want to signup?"))
                   ],
                 );
               },

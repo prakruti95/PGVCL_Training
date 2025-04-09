@@ -1,3 +1,9 @@
+import 'package:bloc22/product_bloc.dart';
+import 'package:bloc22/product_insert_bloc.dart';
+import 'package:bloc22/product_screen.dart';
+import 'package:bloc22/signup_bloc.dart';
+import 'package:bloc22/signup_screen.dart';
+import 'package:bloc22/spalshscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +25,9 @@ class MyApp extends StatelessWidget
       (providers:
       [
         BlocProvider<LoginBloc>(create: (_) => LoginBloc()),
+        BlocProvider<SignupBloc>(create: (_) => SignupBloc()),
+        BlocProvider<ProductBloc>(create: (_) => ProductBloc()),
+        BlocProvider<ProductInsertBloc>(create: (_) => ProductInsertBloc()),
       ],
       child:MaterialApp(home:LoginScreen()),
 
