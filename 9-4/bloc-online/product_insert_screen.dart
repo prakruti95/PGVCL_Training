@@ -1,4 +1,5 @@
 import 'package:bloc22/product_insert_bloc.dart';
+import 'package:bloc22/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,6 +28,7 @@ class _ProductInsertScreenState extends State<ProductInsertScreen> {
               nameController.clear();
               priceController.clear();
               descController.clear();
+              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => ProductScreen()));
             } else if (state is ProductInsertFailure) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
             }

@@ -1,9 +1,9 @@
-import 'package:bloc22/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:bloc22/product_model.dart';
 
 
 part 'product_event.dart';

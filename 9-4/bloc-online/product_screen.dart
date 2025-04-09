@@ -1,8 +1,9 @@
+import 'package:bloc22/product_edit_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc22/product_bloc.dart';
 import 'package:bloc22/product_insert_screen.dart';
 import 'package:bloc22/product_model.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class ProductScreen extends StatelessWidget {
@@ -42,17 +43,17 @@ class ProductScreen extends StatelessWidget {
                           IconButton(
                             icon: const Icon(Icons.edit),
                             onPressed: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => ProductEditScreen(
-                              //       id: product.id,
-                              //       name: product.name,
-                              //       price: product.price,
-                              //       description: product.description,
-                              //     ),
-                              //   ),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProductEditScreen(
+                                    id: product.id,
+                                    name: product.name,
+                                    price: product.price,
+                                    description: product.description,
+                                  ),
+                                ),
+                              );
                             },
                           ),
                           // IconButton(

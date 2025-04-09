@@ -1,3 +1,4 @@
+import 'package:bloc22/product_action_bloc.dart';
 import 'package:bloc22/product_bloc.dart';
 import 'package:bloc22/product_insert_bloc.dart';
 import 'package:bloc22/product_screen.dart';
@@ -26,8 +27,9 @@ class MyApp extends StatelessWidget
       [
         BlocProvider<LoginBloc>(create: (_) => LoginBloc()),
         BlocProvider<SignupBloc>(create: (_) => SignupBloc()),
-        BlocProvider<ProductBloc>(create: (_) => ProductBloc()),
+        BlocProvider<ProductBloc>(create: (_) => ProductBloc()..add(FetchProducts())),
         BlocProvider<ProductInsertBloc>(create: (_) => ProductInsertBloc()),
+        BlocProvider<ProductActionBloc>(create: (_) => ProductActionBloc()),
       ],
       child:MaterialApp(home:LoginScreen()),
 
