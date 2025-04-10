@@ -1,91 +1,49 @@
 import 'dart:io';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:imgsync/api_service.dart';
-
-import 'connectivity_helper.dart';
 import 'dbhelper.dart';
+import 'connectivity_helper.dart';
+import 'api_service.dart';
+import 'package:http/http.dart' as http;
 
-void main()
-{
-  runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  ConnectivityHelper.monitorConnectivity();
+  runApp(const MyApp());
 }
-class MyApp extends StatelessWidget
-{
-  const MyApp({super.key});
 
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
-  Widget build(BuildContext context)
-  {
-    return MaterialApp(home:UploadPage());
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Offline Sync with Image',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const CategoryPage(),
+    );
   }
 }
 
-class UploadPage extends StatefulWidget
-{
-  const UploadPage({super.key});
-
+class CategoryPage extends StatefulWidget {
+  const CategoryPage({super.key});
   @override
-  State<UploadPage> createState() => _UploadPageState();
+  State<CategoryPage> createState() => _CategoryPageState();
 }
 
-class _UploadPageState extends State<UploadPage>
-{
+class _CategoryPageState extends State<CategoryPage> {
   final TextEditingController _nameController = TextEditingController();
   File? _image;
   final picker = ImagePicker();
   final dbHelper = DBHelper();
 
-  @override
-  void initState()
-  {
-    // TODO: implement initState
-    super.initState();
-
-  }
-
-  @override
-  Widget build(BuildContext context)
-  {
-    return Scaffold
-      (
-        appBar: AppBar(title: Text("Upload Image"),),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children:
-            [
-
-              TextField(controller: _nameController, decoration: const InputDecoration(labelText: "Category Name")),
-
-              const SizedBox(height: 10),
-
-              _image == null
-                  ? const Text("No image selected")
-                  : Image.file(_image!, height: 150),
-
-              ElevatedButton(onPressed: _pickImage, child: const Text("Pick Image")),
-              const SizedBox(height: 10),
-              ElevatedButton(onPressed: _savedata, child: const Text("Save")),
-            ],
-          ),
-        ),
-
-      );
-  }
-
-  Future<void> _pickImage()async
-  {
+  Future<void> _pickImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
-
       if (pickedFile != null) _image = File(pickedFile.path);
-
     });
   }
 
-  Future<void> _savedata() async {
+  Future<void> _saveData() async {
     if (_nameController.text.isEmpty || _image == null) return;
     bool online = await ConnectivityHelper.isOnline();
     if (online) {
@@ -104,4 +62,25 @@ class _UploadPageState extends State<UploadPage>
     setState(() => _image = null);
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Add Category")),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextField(controller: _nameController, decoration: const InputDecoration(labelText: "Category Name")),
+            const SizedBox(height: 10),
+            _image == null
+                ? const Text("No image selected")
+                : Image.file(_image!, height: 150),
+            ElevatedButton(onPressed: _pickImage, child: const Text("Pick Image")),
+            const SizedBox(height: 10),
+            ElevatedButton(onPressed: _saveData, child: const Text("Save")),
+          ],
+        ),
+      ),
+    );
+  }
 }
