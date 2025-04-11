@@ -9,10 +9,17 @@ public class CustomBatteryPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    switch call.method {
-    case "getPlatformVersion":
-      result("iOS " + UIDevice.current.systemVersion)
-    default:
+    if call.method == "getBatteryLevel" {
+      UIDevice.current.isBatteryMonitoringEnabled = true
+      let batteryLevel = UIDevice.current.batteryLevel
+      if batteryLevel < 0 {
+        result(FlutterError(code: "UNAVAILABLE",
+                            message: "Battery level not available.",
+                            details: nil))
+      } else {
+        result(Int(batteryLevel * 100))
+      }
+    } else {
       result(FlutterMethodNotImplemented)
     }
   }
