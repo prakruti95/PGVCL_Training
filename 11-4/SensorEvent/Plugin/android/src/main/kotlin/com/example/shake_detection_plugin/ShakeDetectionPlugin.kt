@@ -1,14 +1,14 @@
 package com.example.shake_detection_plugin
 
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import androidx.annotation.NonNull
 import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.plugin.common.MethodCall
-import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.MethodChannel.Result
+import io.flutter.plugin.common.EventChannel
 
-class ShakeDetectionPlugin: FlutterPlugin,SensorEventListener
-{
+class ShakeDetectionPlugin : FlutterPlugin, SensorEventListener {
   private lateinit var sensorManager: SensorManager
   private var accelerometer: Sensor? = null
   private var lastX = 0f
@@ -20,11 +20,10 @@ class ShakeDetectionPlugin: FlutterPlugin,SensorEventListener
   private var canShake = true // Flag to allow shake detection
   private var eventSink: EventChannel.EventSink? = null
 
-  override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding)
-  {
+  override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    // Create an EventChannel to send shake events to Flutter
     val eventChannel = EventChannel(binding.binaryMessenger, "shake_detection_plugin/shake_event")
     eventChannel.setStreamHandler(object : EventChannel.StreamHandler {
-
       override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
         // Store the EventSink to send events later
         eventSink = events
@@ -34,13 +33,17 @@ class ShakeDetectionPlugin: FlutterPlugin,SensorEventListener
         eventSink = null
       }
     })
+
+    // Initialize the sensor manager and accelerometer
     sensorManager = binding.applicationContext.getSystemService(android.content.Context.SENSOR_SERVICE) as SensorManager
     accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+
+    // Register the accelerometer sensor listener
     accelerometer?.let {
       sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_UI)
     }
-
   }
+
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
     // Unregister the sensor listener when the plugin is detached
     accelerometer?.let {

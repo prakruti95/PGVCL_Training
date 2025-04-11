@@ -1,8 +1,7 @@
 import Flutter
 import UIKit
 
-public class ShakeDetectionPlugin: NSObject, FlutterPlugin
-{
+public class ShakeDetectionPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "shake_detection_plugin", binaryMessenger: registrar.messenger())
     let instance = ShakeDetectionPlugin()
