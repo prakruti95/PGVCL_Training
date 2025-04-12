@@ -1,0 +1,2 @@
+            shrinkResources true
+            minifyEnabled true
